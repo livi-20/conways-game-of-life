@@ -9,6 +9,7 @@ int main (int argc, char ** argv)
     cbreak();
     noecho();
     curs_set(0);
+    keypad(stdscr, TRUE);
 
     int altura, ancho;
     getmaxyx(stdscr, altura, ancho);
@@ -17,9 +18,14 @@ int main (int argc, char ** argv)
     WINDOW * ventana = newwin(altura -2*margen, ancho - 2*margen, margen, margen);
     box(ventana, 0, 0);
     wrefresh(ventana);
-
     mvwprintw(ventana, 0, 2, "Conway's Game of Life");
-    mvwprintw(ventana, altura - 4, 2, "Presione 'q' para salir");
+    
+    int botones = altura - 4;
+    mvwprintw(ventana, botones, 2, 'q: Salir');
+    mvwprintw(ventana, botones, 12, 'p: Play/Pausa');
+    mvwprintw(ventana, botones, 24, '+: Acelerar');
+    mvwprintw(ventana, botones, 32, '-: Desacelerar');
+    mvwprintw(ventana, botones, 40, 'SPACE: Avanzar gen');
 
     int ch;
     while ((ch = wgetch(ventana)) != 'q'){
