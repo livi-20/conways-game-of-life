@@ -7,6 +7,7 @@
 // Usamos macros para definir las dimensiones de la cuadrícula.
 #define ANCHO_CUADRICULA 200
 #define ALTO_CUADRICULA 50
+#define PORCENTAJE_CELULAS_VIVAS_INICIAL(porcentaje) ((rand() % 100) < porcentaje)
 
 // Definición de la estructura para representar el estado del juego (que corresponde a una cuadrícula de células vivas y muertas).
 typedef struct {
