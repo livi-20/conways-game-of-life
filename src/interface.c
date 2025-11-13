@@ -7,8 +7,11 @@ int main (int argc, char ** argv)
 {
     initscr();
     cbreak();
+    noecho();
+    curs_set(0);
 
     int altura, ancho;
+    getmaxyx(stdscr, altura, ancho);
     
     int margen = 1;
     WINDOW * ventana = newwin(altura -2*margen, ancho - 2*margen, margen, margen);
