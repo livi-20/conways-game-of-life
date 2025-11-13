@@ -1,27 +1,27 @@
-//Version 1
-#include <pdcurses.h>
+//Version 2; mejor código
 #include <stdio.h>
+#include <stdlib.h>
 #include <ncurses.h>
 
 int main (int argc, char ** argv) 
 {
     initscr();
-    int altura, ancho, pos_y, pos_x;
-    altura = 100;
-    ancho = 100;
-    pos_y = pos_x = 1;
+    cbreak();
 
-    WINDOW * ventana = newwin(altura, ancho, pos_y, pos_x);
-    refresh();
-
+    int altura, ancho;
+    
+    int margen = 1;
+    WINDOW * ventana = newwin(altura -2*margen, ancho - 2*margen, margen, margen);
     box(ventana, 0, 0);
-    mvwprintw(ventana, 50, 50, "Prueba");
     wrefresh(ventana);
 
-    int c = getch();
+    mvwprintw(ventana, 0, 2, "Conway's Game of Life");
+    mvwprintw(ventana, altura - 4, 2, "Presione 'q' para salir");
+
+    int ch;
+    while ((ch = wgetch(ventana)) != 'q'){
+    }
 
     endwin();
-
-
     return 0;
 }
