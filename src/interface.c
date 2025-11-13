@@ -1,4 +1,4 @@
-//Version 2; mejor código
+//Version 3; más botones
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
@@ -19,13 +19,13 @@ int main (int argc, char ** argv)
     box(ventana, 0, 0);
     wrefresh(ventana);
     mvwprintw(ventana, 0, 2, "Conway's Game of Life");
-    
+
     int botones = altura - 4;
-    mvwprintw(ventana, botones, 2, 'q: Salir');
-    mvwprintw(ventana, botones, 12, 'p: Play/Pausa');
-    mvwprintw(ventana, botones, 24, '+: Acelerar');
-    mvwprintw(ventana, botones, 32, '-: Desacelerar');
-    mvwprintw(ventana, botones, 40, 'SPACE: Avanzar gen');
+    mvwprintw(ventana, botones, 2, "q: Salir");
+    mvwprintw(ventana, botones, 12, "p: Play/Pausa");
+    mvwprintw(ventana, botones, 27, "+: Acelerar");
+    mvwprintw(ventana, botones, 40, "-: Desacelerar");
+    mvwprintw(ventana, botones, 56, "SPACE: Avanzar gen");
 
     int ch;
     while ((ch = wgetch(ventana)) != 'q'){
