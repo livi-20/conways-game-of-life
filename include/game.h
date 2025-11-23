@@ -39,5 +39,5 @@ unsigned short contarVecinasVivas(Cuadricula* cuadricula, unsigned short x, unsi
 // Función para obtener el número de generación actual.
 uint64_t obtenerNumGeneracion(Cuadricula* cuadricula);
 
-// OPCIONAL -- Función para restablecer la cuadrícula a un estado inicial (con un ~20% de células vivas). Esto puede ser útil para reiniciar el juego sin tener que destruir y recrear la cuadrícula, lo que sería menos eficiente en términos de rendimiento y uso de memoria.
-// void reiniciarCuadricula(Cuadricula* cuadricula);
+// Función para restablecer la cuadrícula a un estado inicial (con un ~20% de células vivas). Esto puede ser útil para reiniciar el juego sin tener que destruir y recrear la cuadrícula, lo que sería menos eficiente en términos de rendimiento y uso de memoria.
+void reiniciarCuadricula(Cuadricula* cuadricula);

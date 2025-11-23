@@ -151,3 +151,82 @@ unsigned short contarVecinasVivas(Cuadricula* cuadricula, unsigned short x, unsi
     }
     return vecinasVivas;
 }
+
+// Función para calcular la siguiente generación de la cuadrícula según las reglas del Juego de la Vida.
+void calcularCuadriculaSiguiente(Cuadricula* cuadricula) {
+    // Verificamos que la cuadrícula no esté vacía.
+    if (cuadricula == NULL) {
+        return;
+    }
+    // Recorremos cada célula de la cuadrícula actual para aplicar las reglas del Juego de la Vida.
+    for (unsigned short y = 0; y < cuadricula->alto; y++) {
+        for (unsigned short x = 0; x < cuadricula->ancho; x++) {
+            // Contamos el número de células vivas alrededor de la célula en (x, y).
+            unsigned short vecinasVivas = contarVecinasVivas(cuadricula, x, y);
+            // Aplicamos las reglas del Juego de la Vida para determinar el estado de la célula en la siguiente generación.
+            if (cuadricula->genActual[y][x] == true) {
+                // Una célula viva con 2 o 3 vecinas vivas sobrevive; de lo contrario, muere.
+                if (vecinasVivas == 2 || vecinasVivas == 3) {
+                    cuadricula->genSiguiente[y][x] = true; // La célula sobrevive.
+                } else {
+                    cuadricula->genSiguiente[y][x] = false; // La célula muere.
+                }
+            } else {
+                // Una célula muerta con exactamente 3 vecinas vivas se convierte en una célula viva.
+                if (vecinasVivas == 3) {
+                    cuadricula->genSiguiente[y][x] = true; // La célula nace.
+                } else {
+                    cuadricula->genSiguiente[y][x] = false; // La célula permanece muerta.
+                }
+            }
+        }
+    }
+    // Intercambiamos los punteros de las matrices genActual y genSiguiente para avanzar a la siguiente generación.
+    bool** temp = cuadricula->genActual;
+    cuadricula->genActual = cuadricula->genSiguiente;
+    cuadricula->genSiguiente = temp;
+
+    // Incrementamos el número de generación.
+    cuadricula->numGeneracion++;
+}
+
+// Función para obtener el estado de una célula específica en la cuadrícula.
+bool obtenerEstadoCelula(Cuadricula* cuadricula, unsigned short x, unsigned short y) {
+    // Verificamos que la cuadrícula no esté vacía y que las coordenadas estén dentro de los límites.
+    if (cuadricula == NULL || x < 0 || x >= cuadricula->ancho || y < 0 || y >= cuadricula->alto) {
+        return false; // Retornamos false si la cuadrícula es nula o las coordenadas son inválidas.
+    }
+    return cuadricula->genActual[y][x]; // Retornamos el estado de la célula en (x, y).
+}
+
+// Función para obtener el número de generación actual.
+uint64_t obtenerNumGeneracion(Cuadricula* cuadricula) {
+    // Verificamos que la cuadrícula no esté vacía.
+    if (cuadricula == NULL) {
+        return 0;
+    }
+    return cuadricula->numGeneracion; // Retornamos el número de generación actual.
+}
+
+// Función para restablecer la cuadrícula a un estado inicial (con un ~20% de células vivas, aleatorizadas).
+void reiniciarCuadricula(Cuadricula* cuadricula) {
+    // Verificamos que la cuadrícula no esté vacía.
+    if (cuadricula == NULL) {
+        return;
+    }
+    // Limpiamos ambas matrices (genActual y genSiguiente) restableciendo todas las células a 'false' (muertas). La función memset se utiliza para establecer todos los bytes de la memoria asignada a 0.
+    for (unsigned short i = 0; i < cuadricula->alto; i++) {
+        memset(cuadricula->genActual[i], 0, cuadricula->ancho * sizeof(bool));
+        memset(cuadricula->genSiguiente[i], 0, cuadricula->ancho * sizeof(bool));
+    }
+    // Generamos una nueva semilla para el generador de números aleatorios.
+    srand((unsigned int)time(NULL));
+    // Inicializamos la matriz de células actual con un ~20% de células vivas distribuidas aleatoriamente.
+    for (unsigned short i = 0; i < cuadricula->alto; i++) {
+        for (unsigned short j = 0; j < cuadricula->ancho; j++) {
+            cuadricula->genActual[i][j] = PORCENTAJE_CELULAS_VIVAS_INICIAL(20);
+        }
+    }
+    // Restablecemos el número de generación a 0.
+    cuadricula->numGeneracion = 0;
+}
