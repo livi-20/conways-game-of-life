@@ -124,7 +124,7 @@ void dibujarCuadricula(WINDOW* ventana, Cuadricula* cuadricula) {
             // Seleccionamos el carácter a dibujar según el estado de la célula.
             char* caracterCelula = estadoCelula ? CELULA_VIVA : CELULA_MUERTA;
             // Dibujamos la célula, ajustando las coordenadas para tener en cuenta el margen y la posición de inicio de la cuadrícula.
-            mvwprintw(ventana,INICIO_CUADRICULA_Y + y, INICIO_CUADRICULA_X + x, "%s", caracterCelula);
+            mvwprintw(ventana, INICIO_CUADRICULA_Y + y, INICIO_CUADRICULA_X + x, "%s", caracterCelula);
         }
     }
 }
@@ -149,7 +149,7 @@ void mostrarPanelEstado(WINDOW* ventana, uint64_t numGeneracion, int velocidadEv
     const char* textoEstado = programaEnEjecucion ? "CORRIENDO" : "EN PAUSA";   // Texto para el estado del juego.
 
     // Limpiamos la fila del estado de juego antes de actualizarla.
-    mvwhline(ventana, filaEstado, ANCHO_BORDE, ' ', anchoVentana - (ANCHO_BORDE * 2) - ANCHO_BORDE);
+    mvwhline(ventana, filaEstado, ANCHO_BORDE, ' ', anchoVentana - (ANCHO_BORDE * 3));
 
     // Mostramos el estado del juego en la primera línea del panel inferior.
     mvwprintw(ventana, filaEstado, ANCHO_BORDE + 1, "Generación: %llu | Velocidad de Evolución: %d ms | Estado: %s",
