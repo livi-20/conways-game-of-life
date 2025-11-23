@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
-#include "../include/game.h" //Usar cuadrícula puesta en el game.h
+#include "game.h"
+#include "interface.h"
 
 //Crear función para la cuadrícula
 void dibujarCuadricula(WINDOW *win, Cuadricula *cuad) {
