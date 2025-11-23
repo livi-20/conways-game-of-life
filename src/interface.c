@@ -11,12 +11,12 @@ void dibujarCuadricula(WINDOW *win, Cuadricula *cuad) {
 
     //dejamos el espacio para el titulo (fila arriba) y los botones (fila abajo)
     int offsetY = 1;
-    int limiteY = maxY -2
+    int limiteY = maxY -2;
 
     //recorrer cada fila de la cuadrícula sin salirse de la matriz ni ponerse encima del titulo ni los botones
-    for (unsigned short y = =; y < cuad->alto && (y + offsetY) < limiteY; y++) {
-        for (unsigned short x = 0; x < cuad->ancho && x < (unsigned shot)maxX - 2; x++) {
-            if (cuad->genActucal[y][x])
+    for (unsigned short y = 0; y < cuad->alto && (y + offsetY) < limiteY; y++) {
+        for (unsigned short x = 0; x < cuad->ancho && x < (unsigned short)maxX - 2; x++) {
+            if (cuad->genActual[y][x])
                 mvwprintw(win, y + offsetY, x + 1, "0"); //célula viva
             else
                 mvwprintw(win, y + offsetY, x + 1, " "); //célula muerta
@@ -64,8 +64,14 @@ int main (int argc, char ** argv)
     dibujarCuadricula(ventana, cuadricula);
     wrefresh(ventana);
     
+    //Funcionamiento de las teclas
     int ch;
     while ((ch = wgetch(ventana)) != 'q'){
+        if (ch == ' ') {
+            calcularCuadriculaSiguiente(cuadricula);
+            dibujarCuadricula(ventana, cuadricula);
+            wrefresh(ventana);
+        }
     }
 
     //Para liberar la memoria de la cuadricula
