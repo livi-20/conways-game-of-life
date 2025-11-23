@@ -15,8 +15,8 @@ typedef struct {
     unsigned short ancho;
     unsigned short alto;
     uint64_t numGeneracion; // Número de generación actual
-    bool **genActual;  // Generación actual
-    bool **genSiguiente;  // Generación siguiente
+    bool **genActual;       // Generación actual
+    bool **genSiguiente;    // Generación siguiente
     // NOTA: Definimos punteros dobles para representar matrices de booleanos con el estado actual y siguiente de cada célula. Usamos punteros para permitir la asignación dinámica de memoria.
 } Cuadricula;
 
