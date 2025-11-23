@@ -193,7 +193,7 @@ void calcularCuadriculaSiguiente(Cuadricula* cuadricula) {
 // Función para obtener el estado de una célula específica en la cuadrícula.
 bool obtenerEstadoCelula(Cuadricula* cuadricula, unsigned short x, unsigned short y) {
     // Verificamos que la cuadrícula no esté vacía y que las coordenadas estén dentro de los límites.
-    if (cuadricula == NULL || x < 0 || x >= cuadricula->ancho || y < 0 || y >= cuadricula->alto) {
+    if (cuadricula == NULL || x >= cuadricula->ancho || y >= cuadricula->alto) {
         return false; // Retornamos false si la cuadrícula es nula o las coordenadas son inválidas.
     }
     return cuadricula->genActual[y][x]; // Retornamos el estado de la célula en (x, y).
