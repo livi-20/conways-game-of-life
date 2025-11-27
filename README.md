@@ -1,89 +1,141 @@
-# Conway's Game of Life en C (Juego de la vida de Conway)
-Este proyecto se basa en la implementación del juego de la vida de Conway en el lenguaje C, utlizando la bilbioteca de ncurses. Se trata de que se puedan visualizar la evolución de unas "células", vivas o muertas, dentro de una cuadrícula esto por medio de la biblioteca ncurses. Además de que se puede controlar la velocidad del tiempo que pasa para ellas, la generación en la que se encuentran y se puede pausar para ver solo un instánte de tiempo.
+# Conway's Game of Life (Juego de la vida de Conway)
 
+Este proyecto consiste en la implementación del juego de la vida de Conway en el lenguaje de programación `C`, utilizando la biblioteca `ncurses`. 
 
----
+El juego es un _autómata celular de cero jugadores_; una simulación automática donde se puede visualizar la evolución de "células" que cumplen ciertas reglas para su nacimiento, supervivencia y muerte en cada generación sucesiva, y que se representan dentro de una cuadrícula.
+
+La **interfaz de usuario** usa la biblioteca `ncurses` para su funcionamiento, y permite:
+- Controlar la velocidad del tiempo que pasa entre cada generación.
+- Reiniciar el juego para probar otro patrón inicial.
+- Avanzar una generación (cuando el juego está en pausa).
+- Visualizar la información del estado de juego.
+- Pausar, resumir o salir de la simulación.
+
 
 ## Estructura del proyecto
-Se organizó el proyecto en varios módulos, para la facilitación del trabajo en equipo. En dos grandes rasgos se dividió en la parte de la lógica del juego y la de la interface de este.
+Se organizó el proyecto en dos grandes módulos (o _features_) para facilitar el trabajo en paralelo, que corresponden a la **lógica del juego** y a la **interfaz de usuario**.
 
-conways-game-of-life
-    include/
-        game.h
-        interface.h
-    src/
-        main.c
-        game.c
-        interface.c
-    Makefile
-    README
+El repositorio está estructurado de la siguiente manera:
+
+```
+conways-game-of-life/
+├── include/
+│   ├── game.h           # Macros y prototipos de funciones para la lógica del juego.
+│   └── interface.h      # Macros y prototipos de funciones para la interfaz de usuario.
+├── src/
+│   ├── main.c           # Programa principal de demostración.
+│   ├── game.c           # Implementación de las funciones de la lógica del juego.
+│   └── interface.c      # Implementación de las funciones de la interfaz de usuario.
+├── bin/                 # Directorio para el ejecutable (generado automáticamente)
+├── obj/                 # Directorio para archivos objeto (generado automáticamente)
+├── Makefile             # Automatización de compilación y ejecución
+└── README.md            # Este archivo
+```
 
 
-### 'Game'
-Contiene la lógica del juego donde se hacen funciones que cumplan con el servicio de:
+### `Game`
+Contiene la lógica del juego, con funciones que permiten:
 - Crear y liberar la cuadrícula donde se muestran las células.
-- Conteo de las células vecinas que tiene la célula, con esto aplicamos la lógica del juego.
-- Calculamos la cuadrícula siguiente; donde aquí se ve si una célula sobrevive o muere.
+- Realizar el conteo de las células vecinas vivas que tiene cada célula individual (con esto aplicamos la lógica del juego).
+- Calcular la cuadrícula siguiente y almacenarla en un buffer; donde se muestra si una célula sobrevive o muere.
 
-### 'Interface'
-Esta tiene la interfaz gráfica en la terminal, esto se logra gracias a ncurses. También se tienen funciones que sirven para:
+### `Interface`
+Implementa la interfaz de usuario en la terminal, gracias a `ncurses`. También se designan funciones para:
 - Inicializar la pantalla en la terminal y la creación de la ventana principal.
-- Dibujo de la cuadrícula con caractéres para las células vivas o muertas.
-- Creación del panel inferior donde están el estado y los controles.
+- Dibujar la cuadrícula con caracteres específicos para las células vivas o muertas.
+- Crear y actualizar el panel inferior, donde se muestra el estado de la simulación y los controles disponibles.
 
-### 'Main'
-Donde se coordina toda la aplicación para que el juego funcione correctamente:
+### `Main`
+Coordina toda la aplicación para demostrar la funcionalidad del juego. El proceso involucra:
 - Inicializar ncurses y la cuadrícula.
 - Controlar el bucle principal del juego.
 - Procesar las teclas ingresadas por el usuario.
 - Actualizar la simulación cuadro por cuadro.
 
+
+## Compatibilidad, Dependencias y Bibliotecas
+El proyecto es compatible con Linux y MacOS. Para compilar y ejecutar correctamente el programa, es necesario contar con las siguientes dependencias:
+
+### 1. Biblioteca `ncurses`
+El proyecto utiliza `ncurses` para manejar la interfaz gráfica en la terminal.
+
+**Instalación: Debian-based distros:**
+```bash
+sudo apt install libncursesw5-dev
+```
+**Instalación: Red Hat-based distros:**
+```bash
+sudo dnf install ncurses-devel
+```
+**Instalación: MacOS (Homebrew):**
+```zsh
+brew install ncurses
+```
 ---
 
-## Dependencias y bibliotecas
-Para compilar y ejecutar correctamente el programa, es necesario contar con las siguientes dependencias:
+### 2. Compilador `GCC`
+Se utiliza `GCC` para compilar este proyecto.
 
-### Biblioteca **ncurses**
-El proyecto utiliza ncurses para manejar la interfaz gráfica en la terminal.
-
-**Instalación:**
-sudo apt install libncursesw5-dev
-
-### Compilador GCC
-Se necesita GCC para compilar en C
-
-**Instalación:**
+**Instalación: Debian-based distros:**
+```bash
 sudo apt install gcc
+```
+**Instalación: Red Hat-based distros:**
+```bash
+sudo dnf install gcc
+```
+**Instalación: MacOS (Homebrew):**
+```zsh
+brew install gcc
+```
 
-### Make
-Para usar el Makefile se debe instalar
+---
 
-**Instalación:**
+### 3. `Make`
+El proyecto utiliza `Make` como sistema automatizado para la compilación, ejecución y mantenimiento del proyecto a través de un `Makefile`. 
+
+**Instalación: Debian-based distros:**
+```bash
 sudo apt install make
-
+```
+**Instalación: Red Hat-based distros:**
+```bash
+sudo dnf install make
+```
+**Instalación: MacOS (Homebrew):**
+```zsh
+brew install make
+```
 ---
 
 ## Compilación y ejecución
-Este proyecto tiene un MakeFile que automatiza el proceso de compilación, por lo que no es necesario compilar los archivos manualmente.
+Este proyecto cuenta con un sistema automatizado para la compilación, ejecución y mantenimiento del proyecto a través de un `Makefile`, por lo que no es necesario compilar los archivos manualmente.
 
-**Compilar:**
-Para ello entre a la terminal de su editor de texto preferido y escriba:
+### Compilación
+Para compilar, abra una ventana de terminal y diríjase al directorio del proyecto. Ejecute el comando:
+```bash
 make
+```
 
 Este comando realiza las siguientes acciones: 
-1. Crea los directorio obj/ y /bin
-2. Compila todos los archivos .c
-3. Genera el ejecutable en bin/conway
+1. Crea los directorios `/obj` y `/bin`
+2. Compila todos los archivos `.c`
+3. Genera el ejecutable `conway` en `bin/conway`
 
-**Limpiar archivos generados:**
+### Ejecución
+Para correr el programa una vez compilado, ejecute:
+```bash
+make run
+```
+
+### Limpiar archivos generados
+Para limpiar los archivos y directorios de compilación generados por `Make`, ejecute:
+```bash
 make clean
+```
 
-Elimina la carpeta obj/, bin/ y otoso los archivos compilados.
-
-**Ejecutar con Valgrind:**
+### Ejecutar con Valgrind
+Este comando corre el ejecutable usando Valgrind, y genera el archivo `valgrind-report.txt` para revisar el uso de memoria y las posibles fugas.
+```bash
 make valgrind
-
-Este comando corre el ejecutable bajo Valgrind generando un archivo valgrind-report.txt para revisar los memory leaks.
-
-
-
+```
