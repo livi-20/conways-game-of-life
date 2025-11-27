@@ -1,0 +1,51 @@
+# Conway's Game of Life en C (Juego de la vida de Conway)
+Este proyecto se basa en la implementación del juego de la vida de Conway en el lenguaje C, utlizando la bilbioteca de ncurses. Se trata de que se puedan visualizar la evolución de unas "células", vivas o muertas, dentro de una cuadrícula. Se puede controlar la velocidad del tiempo que pasa para ellas, la generación en la que se encuentran y se puede pausar para ver solo un instánte de tiempo.
+
+
+## Estructura del proyecto
+Se organizó el proyecto en varios modulos, para la facilitación del trabajo en equipo que se realizó. En dos grandes rasgos de dividió en la parte de la lógica del juego y la de la interface de este.
+
+
+### 'Game'
+Contiene la lógica del juego donde se hacen funciones que cumplan con el servicio de:
+-Crear y liberar la cuadrícula donde se muestran las células.
+-Conteo de las vecinas de que tiene la célula, con esto aplicamos las reglas del juego.
+-Calculamos la cuadrícula siguiente; donde aquí se ve si una célula sobrevive o muere.
+
+### 'Interface'
+Esta tiene la interfaz gráfica en la terminal, esto se logra gracias a ncurses. También se tienen funciones que sirven para:
+-Inicializar la pantalla en la terminal y la creación de la ventana principal.
+-Dibujo de la cuadrícula con carácteres para las célculas vivas o muertas.
+-Creación del panel inferior donde están el estado y los controles.
+
+
+### 'Main'
+Donde se coordina toda la aplicación para que el juego funcione correctamente:
+-Inicializa ncurses y la cuadrícula.
+-Controla el bucle principal del juego.
+-Procesa las teclas que da el usuario (los controles).
+-Actualiza la simulación cuadro por cuadro.
+
+## Compilación y ejecución
+Este proyecto tiene un MakeFile que automatiza el proceso de compilación, por lo que no es necesario compilar los archivos manualmente.
+
+**Compilar**
+make
+
+Este comando realiza las siguientes acciones: 
+1. Crea los directorio obj/ y /bin
+2. Compila todos los archivos .c
+3. Genera el ejecutable en bin/conway
+
+**Limpiar archivos generados**
+make clean
+
+Elimina la carpeta obj/, bin/ y otoso los archivos compilados.
+
+**Ejecutar con Valgrind**
+make valgrind
+
+Este comando corre el ejecutable bajo Valgrind generando un archivo valgrind-report.txt para revisar los memory leaks.
+
+
+
